@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Speed animation</title>
+	<style type="text/css">
+		body,div,span{
+			margin: 0;
+			padding: 0;
+		}
+		.panel{
+			position: relative;
+			width: 200px;
+			height: 200px;
+			background-color: #61FCFA;
+			left: -200px;
+			top: 0;
+		}
+		.panel span{
+			position: absolute;
+			width: 20px;
+			height: 85px;
+			background-color: #55FC77;
+			left: 200px;
+			top: 57.5px;
+		}
+
+	</style>
+</head>	
+<body>
+	<div class="panel" id="panel1">
+		<span>触摸展开</span>
+	</div>
+		<script type="text/javascript">
+			window.onload=function (){
+				var pDiv = document.getElementById('panel1');
+				pDiv.onmouseover = function(){
+					starMove(0);//传递目的地位置
+				};
+				pDiv.onmouseout = function(){
+					starMove(-200);
+				};
+			};
+			var timer = null;
+			function starMove(pleft) {
+				clearInterval(timer);//阻止多次触摸执行了多次定时器，先清除
+				var pDiv = document.getElementById('panel1');
+				timer =setInterval(function (){
+					var speed = 0;
+					if (pDiv.offsetLeft<pleft) {//为了传递更少的参数
+						speed = 10;//pDiv.offsetLeft=-200，pleft=0的时候，速度为正，逐渐移出
+					}else{
+						speed = -10;//pDiv.offsetLeft=0，pleft=-200的时候，速度为负，逐渐隐藏
+					}
+					if (pDiv.offsetLeft == pleft) {
+						clearInterval(timer);
+					}else{
+						pDiv.style.left = pDiv.offsetLeft+speed+'px';
+					}
+				},30);
+			}
+		</script>	
+</body>
+</html>

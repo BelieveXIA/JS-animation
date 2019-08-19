@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Speed animation</title>
+	<style type="text/css">
+		body,div,span{
+			margin: 0;
+			padding: 0;
+		}
+		.panel{
+			position: relative;
+			width: 200px;
+			height: 200px;
+			background-color: #61FCFA;
+			left: -200px;
+			top: 0;
+		}
+		.panel span{
+			position: absolute;
+			width: 20px;
+			height: 85px;
+			background-color: #55FC77;
+			left: 200px;
+			top: 57.5px;
+		}
+
+	</style>
+</head>	
+<body>
+	<div class="panel" id="panel1">
+		<span id="open">触摸展开</span>
+	</div>
+		<script type="text/javascript">
+			window.onload=function (){
+				var pDiv = document.getElementById('panel1');
+				var op =document.getElementById('open');
+				pDiv.onmouseover = function(){
+					starMove();
+				};
+				pDiv.onmouseout = function(){
+					starMove1();
+				};
+			};
+			var timer = null;
+			function starMove() {
+				clearInterval(timer);//阻止多次触摸执行了多次定时器，先清除
+				var pDiv = document.getElementById('panel1');
+				timer =setInterval(function (){
+					if (pDiv.offsetLeft == 0) {
+						clearInterval(timer);
+					}else{
+						pDiv.style.left = pDiv.offsetLeft+10+'px';
+					}
+				},30);
+			}
+			function starMove1() {
+				clearInterval(timer);//阻止多次触摸执行了多次定时器，先清除
+				var pDiv = document.getElementById('panel1');
+				timer = setInterval(function (){
+					if (pDiv.offsetLeft == -200) {
+						clearInterval(timer);
+					}else{
+						pDiv.style.left = pDiv.offsetLeft-10+'px';
+					}
+				},30);
+			}
+		</script>	
+</body>
+</html>
