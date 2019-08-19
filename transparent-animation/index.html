@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>transparent animation</title>
+	<style type="text/css">
+		body,div{
+			margin: 0;
+			padding: 0;
+		}
+		.panel{
+			width: 200px;
+			height: 200px;
+			background-color: #11A9B8;
+			filter: alpha(opacity:30);/*旧版IE浏览器*/
+			opacity: 0.3;/*火狐，谷歌等*/
+		}
+	</style>
+</head>
+<body>
+	<div class="panel" id="panel1"></div>
+	
+	<script type="text/javascript">
+		window.onload = function () {
+			var pDiv = document.getElementById('panel1');
+			pDiv.onmouseover= function(){
+				starTrans(100);
+			};
+			pDiv.onmouseout = function () {
+				starTrans(30);
+			};
+		};
+		var timer = 0;
+		var alpha = 30;
+		function starTrans(iTarget) {
+			clearInterval(timer);
+			var pDiv = document.getElementById('panel1');
+			timer = setInterval(function(){
+				var speed = 0;
+				if(alpha>iTarget){
+					speed = -10;
+				}else{
+					speed = 10;
+				}
+				if (alpha == iTarget) {
+					clearInterval(timer);
+				}else{
+					alpha += speed;
+					pDiv.style.filter = 'alpha(opacity:'+alpha+')';//兼容处理IE浏览器的方法
+					pDiv.style.opacity = alpha/100;//其余浏览器
+				}
+			},30);
+		}
+	</script>
+</body>
+</html>
