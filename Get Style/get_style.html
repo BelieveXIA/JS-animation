@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Get Style</title>
+	<style type="text/css">
+		body,div{
+			margin: 0;
+			padding: 0;
+		}
+		.ddiv{
+			width: 200px;
+			height: 200px;
+			background-color: #b1b1b1;
+			border: 2px #333333 solid;
+			font-size: 5px;
+		}
+	</style>
+</head>
+<body>
+	<div class="ddiv" id="div1">Hello world</div>
+	<script type="text/javascript">
+		window.onload=function(){
+			startMove();
+		};
+		function startMove(){
+			
+			setInterval(function () {
+				var div1 = document.getElementById('div1');
+				//div1.style.width = div1.offsetWidth-4+'px';//这样获取包括了边框宽度
+				div1.style.width = parseInt(getStyle(div1,'width'))-4+'px';
+				div1.style.fontSize = parseInt(getStyle(div1,'font-size'))+1+'px';
+			},30);
+		}
+		//获取独立的样式
+		function getStyle(obj,attr) {
+			if(obj.currentStyle){
+				return obj.currentStyle[attr];//IE浏览器
+			}else{
+				return getComputedStyle(obj,false)[attr];//火狐浏览器
+			}
+		}
+	</script>
+	
+
+</body>
+</html>

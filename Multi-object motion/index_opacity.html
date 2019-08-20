@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Multi-object motion</title>
+	<style type="text/css">
+		body,div,ul,li{
+			margin: 0;
+			padding: 0;
+		}
+		ul,li{
+			list-style: none;
+		}
+		#panel li{
+			width: 200px;
+			height: 100px;
+			background-color: #3EEF1C;
+			margin-top: 20px;
+			filter: alpha(opcaity:30);
+			opacity: 0.3;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<ul id="panel">
+			<li name="item"></li>
+			<li name="item"></li>
+			<li name="item"></li>
+			<li name="item"></li>
+			<li name="item"></li>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		window.onload = function(){
+			var aLi =document.getElementsByName('item');
+			for(var i=0; i<aLi.length;i++){
+				aLi[i].timer = null;//给定时器一个编号，可以有序的执行或清除各自的定时器
+				aLi[i].alpha = 30;
+				aLi[i].onmouseover = function(){
+					startMove(this,100);//传当前的鼠标触摸参数
+				};
+				aLi[i].onmouseout = function(){
+					startMove(this,30);
+				};
+			}
+		};
+		//var timer = null;//没有编号时，定时器工作混乱
+		//var alpha =30;
+		function startMove(obj,iTarget){
+		 	clearInterval(obj.timer); 
+		 	obj.timer = setInterval(function(){
+		 		var speed = (iTarget-obj.alpha)/5;
+		 		speed = speed>0?Math.ceil(speed):Math.floor(speed);//缓冲速度效果
+		 		if(obj.alpha == iTarget){
+		 			clearInterval(obj.timer);
+		 		}else{
+		 			obj.alpha +=speed;
+		 		obj.style.opacity = obj.alpha/100;
+		 		obj.style.filter = 'alpha:(opacity' + obj.alpha+')';
+		 		}
+		 	},30);
+		}
+	</script>
+</body>
+</html>
