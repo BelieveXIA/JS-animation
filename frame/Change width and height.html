@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Multi-object motion</title>
+	<style type="text/css">
+		body,div,ul,li{
+			margin: 0;
+			padding: 0;
+		}
+		ul,li{
+			list-style: none;
+		}
+		#panel li{
+			width: 200px;
+			height: 100px;
+			background-color: #3EEF1C;
+			margin-top: 20px;
+			border: 2px #666666 solid;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<ul id="panel">
+			<li name="item"></li>
+			<li name="item"></li>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		window.onload = function(){
+			var aLi =document.getElementsByName('item');
+			for(var i=0; i<aLi.length;i++){
+				aLi[i].timer = null;//给定时器一个编号，可以有序的执行或清除各自的定时器
+				aLi[0].onmouseover = function(){
+					startMove(this,'width',400);//传当前的鼠标触摸参数
+				};
+				aLi[0].onmouseout = function(){
+					startMove(this,'width',200);
+				};
+				aLi[1].onmouseover = function(){
+					startMove(this,'height',200);//传当前的鼠标触摸参数
+				};
+				aLi[1].onmouseout = function(){
+					startMove(this,'height',100);
+				};
+			}
+		};
+		//框架
+		//var timer = null;//没有编号时，定时器工作混乱
+		function startMove(obj,attr,iTarget){//(当前值，要改变的属性，目标/最终属性值)
+		 	clearInterval(obj.timer);
+		 	obj.timer = setInterval(function(){
+		 		var icur = parseInt(getStyle(obj,attr));
+		 		var speed = (iTarget-icur)/5;
+		 		speed = speed>0?Math.ceil(speed):Math.floor(speed);//缓冲速度效果
+		 		if(icur == iTarget){
+		 			clearInterval(obj.timer);
+		 		}else{
+		 		obj.style[attr] = icur + speed+'px';		 			
+		 		}
+		 	},30);
+		}
+		function getStyle(obj,attr) {
+			if(obj.currentStyle){
+				return obj.currentStyle[attr];//IE浏览器
+			}else{
+				return getComputedStyle(obj,false)[attr];//火狐浏览器
+			}
+		}
+	</script>
+</body>
+</html>

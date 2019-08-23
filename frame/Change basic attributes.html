@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Multi-object motion</title>
+	<style type="text/css">
+		body,div,ul,li{
+			margin: 0;
+			padding: 0;
+		}
+		ul,li{
+			list-style: none;
+		}
+		#panel li{
+			width: 200px;
+			height: 100px;
+			background-color: #3EEF1C;
+			margin-top: 20px;
+			border: 2px #666666 solid;
+			filter: alpha(opacity:30);
+			opacity: 0.3;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<ul id="panel">
+			<li id="item"></li>
+			<li id="item2"></li>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		window.onload = function(){
+			var aLi1 =document.getElementById('item');
+			var aLi2 =document.getElementById('item2');
+			//for(var i=0; i<aLi.length;i++){
+				//aLi[i].timer = null;//给定时器一个编号，可以有序的执行或清除各自的定时器
+				aLi1.onmouseover = function(){
+					startMove(this,'width',400);//传当前的鼠标触摸参数
+				};
+				aLi1.onmouseout = function(){
+					startMove(this,'width',200);
+				};
+				aLi2.onmouseover = function(){
+					startMove(this,'opacity',100);//传当前的鼠标触摸参数
+				};
+				aLi2.onmouseout = function(){
+					startMove(this,'opacity',30);
+				};
+			//}
+		};
+		//框架
+		//var timer = null;//没有编号时，定时器工作混乱
+		function startMove(obj,attr,iTarget){//(当前值，要改变的属性，目标/最终属性值)
+			clearInterval(obj.timer);
+			obj.timer = setInterval(function(){
+				var icur = 0;
+		 		//透明度的单位和值比较特殊，其他属性单位是px，所以要进行判断
+		 		if (attr == 'opacity' ){
+					//方便计算，透明度小数*100，变成opacity 1=100
+					icur = Math.round(parseFloat(getStyle(obj,attr))*100);
+				}else{
+					icur = parseInt(getStyle(obj,attr));
+				}		 		
+
+				var speed = (iTarget-icur)/5;
+		 		speed = speed>0?Math.ceil(speed):Math.floor(speed);//缓冲速度效果
+		 		if(icur == iTarget){
+		 			clearInterval(obj.timer);
+		 		}else{
+		 			if (attr == 'opacity') {
+		 				obj.style.filter = 'alpha(opacity:'+(icur + speed)+')';
+		 				obj.style.opacity = (icur + speed)/100;
+		 			}else{
+		 				obj.style[attr] = icur + speed+'px';
+		 			}		 					 			
+		 		}
+		 	},30);
+		}
+		function getStyle(obj,attr) {
+			if(obj.currentStyle){
+				return obj.currentStyle[attr];//IE浏览器
+			}else{
+				return getComputedStyle(obj,false)[attr];//火狐浏览器
+			}
+		}
+	</script>
+</body>
+</html>
