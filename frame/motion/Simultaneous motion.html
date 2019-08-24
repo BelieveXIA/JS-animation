@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Simultaneous motion</title>
+	<script type="text/javascript" src="./move.js"></script>
+	<style type="text/css">
+		body,ul,li{
+			margin: 0;
+			padding: 0;
+		}
+		ul li{
+			width: 200px;
+			height: 100px;
+			background-color: #17F8F6;
+			border: 2px #666 solid;
+			filter:alpha(opacity:30);
+			opacity: 0.3;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li id="item"></li>
+	</ul>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oLi =document.getElementById('item'); 
+			oLi.onmouseover = function(){
+				startMove(oLi,{width:203,height:200,opacity:99},function(){
+					startMove(oLi,{width:300});
+				});
+			};
+			oLi.onmouseout = function(){
+				startMove(oLi,{width:203},function(){
+					startMove(oLi,{width:200,height:100,opacity:30});
+				});			
+			};
+		};
+	</script>
+</body>
+</html>
