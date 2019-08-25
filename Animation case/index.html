@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>taobao animation case</title>
+	<script type="text/javascript" src="./move.js"></script>
+	<style type="text/css">
+		body,div,a,i,img,p{
+			margin: 0;
+			padding: 0;
+		}
+		a{
+			text-decoration: none;
+		}
+		.panel-icon{
+			position: relative;
+			width: 300px;
+			height: 200px;
+			background-color: #cccccc;
+			margin: 0 auto;
+			overflow: hidden;
+			text-align: center;
+
+		}
+		.panel-icon .icon{
+			position: relative;
+			display: inline-block;
+			width: 60px;
+			height: 75px;
+			background-color: #fff;
+			border: 0.5px ##F9C2C2 solid;
+			border-radius: 5px;
+			text-align: center;
+			top: 20px;
+			margin-right: 5px;
+			margin-bottom: 5px;
+			overflow: hidden;
+		}
+		.panel-icon .icon i{
+			position: relative;
+			display: inline-block;
+			width: 100%;	
+			text-align: center;
+			top: 7px;
+			left: 0;
+			filter: alpha(opacity:100);
+			opacity: 1;
+		}
+		.panel-icon .icon p:hover{
+			color: #F66565;
+		}
+	</style>
+</head>
+<body>
+	<div class="panel-icon" id="picon">
+		<a href="" class="icon"><i><img src="img/iphone.png" alt=""/></i><p>充话费</p></a>
+		<a href="" class="icon"><i><img src="img/car.png" alt=""/></i><p>车险</p></a>
+		<a href="" class="icon"><i><img src="img/travel.png" alt=""/></i><p>旅行</p></a>
+		<a href="" class="icon"><i><img src="img/games.png" alt=""/></i><p>游戏</p></a>
+		<a href="" class="icon"><i><img src="img/lottery.png" alt=""/></i><p>彩票</p></a>
+		<a href="" class="icon"><i><img src="img/film.png" alt=""/></i><p>电影</p></a>
+		<a href="" class="icon"><i><img src="img/hotel.png" alt=""/></i><p>酒店</p></a>
+		<a href="" class="icon"><i><img src="img/investment.png" alt=""/></i><p>理财</p></a>
+	</div>
+	<script type="text/javascript">
+		window.onload = function(){
+			var iMove = document.getElementById('picon');
+			var ic = iMove.getElementsByTagName('a');
+			for (var i = 0; i < ic.length; i++) {
+				//鼠标触摸元素a，只触发一次onmouseenter
+				ic[i].onmouseenter = function(){
+					var _this = this.getElementsByTagName('i')[0];
+					startMove(_this,{top:-15,opacity:0},function(){
+						_this.style.top = 15+'px';
+						startMove(_this,{top:7,opacity:100});
+					});
+				};
+			}
+		};
+	</script>
+	
+
+</body>
+</html>
